@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'main_website/styles.css' %}" rel="stylesheet">
+
+    <title>Document</title>
+</head>
+
+<body>
+    <!--create your nav here in order to make sure that it always apears on all pages-->
+    <nav>
+        <a href="{% url 'users:account_type' %}">Profile</a>
+        <a href="{% url 'main_app:home' %}">Home</a>
+        <a href="{% url 'users:student_details' %}">Student</a>
+        <a href="{% url 'users:property_account' %}">Property</a>
+    </nav>
+    {% block body %}{% endblock %}
+    <!--U can create a footer under this as well so that u dont have to create it every time-->
+</body>
+
+</html>

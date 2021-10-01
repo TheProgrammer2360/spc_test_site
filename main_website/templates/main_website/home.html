@@ -1,0 +1,10 @@
+{% extends 'main_website/layout.html' %} {% block body %}
+{% if Not_a_student %}
+
+<h4>{{Not_a_student}}</h4>
+{% endif %}
+<h1>Home</h1>
+{% if student_logged_in %}
+  <p style="color:red;">{{student_logged_in}} <a href="{% url 'users:logout' %}">logout</a></p>
+{% endif %}
+{% endblock %}

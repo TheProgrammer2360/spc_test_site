@@ -1,0 +1,54 @@
+{% extends 'main_website/layout.html' %} {% block body %}
+{% load static %}
+<h1>{{request.user.username}}</h1>
+<form action="{% url 'users:image_upload' %}" enctype="multipart/form-data" method="post">
+  {% csrf_token %}
+  {{UploadPicture}}
+  <input type="submit" value="Upload">
+</form>
+  {% if id_upload_message %}
+    <p>{{id_upload_message}}</p>
+  {% endif %}
+  <h2>Profile</h2>
+
+   <img src="{{ request.user.profiles.profile_picture.url }}" alt="Picture" width="200" height="300">
+
+<ul>
+    <li>Phone Number: {{request.user.student.phone_number}}</li>
+    <li>First Name: {{request.user.first_name}}</li>
+    <li>Last Name: {{request.user.last_name}}</li>
+    <li>Email: {{request.user.email}}</li>
+</ul>
+<hr>
+<h2>Documents</h2>
+<div>
+  <div>
+    <label>Identification (ID)</label>
+    <div>
+      <form action="{% url 'users:id_upload' %}" enctype="multipart/form-data" method="post">
+      {{id}}
+      {% csrf_token %}
+      <input type="submit" value="upload">
+        <a href="{% url 'users:view_id_document' %}">View Document</a>
+      </form>
+    <div>
+  <div>
+    <div>
+      <label>Busary Letter</label>
+      <div>
+        {{bursary_letter}}
+        <input type="submit" value="upload">
+      </div>
+    </div>
+    <div>
+      <label>Proof of registration</label>
+        <div>
+          {{proof_of_registration}}
+          <input type="submit" value="upload">
+        </div>
+    </div>
+
+</div>
+<a href="{% url 'users:logout' %}">log Out
+
+</a> {% endblock %}

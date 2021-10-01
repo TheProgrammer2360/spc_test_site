@@ -1,0 +1,25 @@
+{% extends "main_website/layout.html"  %}
+
+{% block body %}
+  <form  action="{% url 'users:register_property_owner' %}" method="post">
+    {% csrf_token %}
+    <div>
+      {{form.property_username}}
+    </div>
+    <div>
+      {{form.property_email}}
+    </div>
+    <div>
+      {{form.property_name}}
+    </div>
+      <div>
+        {{form.property_phone}}
+      </div>
+    <div>
+      {{form.password}}
+    </div>
+    <div>
+      <input type="submit" value="Create account">
+    </div>
+  </form>
+{% endblock %}

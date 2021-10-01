@@ -1,0 +1,31 @@
+{% extends 'main_website/layout.html' %} {% block body %}
+<h1>Create Account</h1>
+<form action="{% url 'users:create' %}" method="POST">
+    <div>
+        {% csrf_token %}
+        <div>
+            <input type="text" name="user_name" placeholder="Username">
+            <p style="color:rgba(100, 100, 100, 100);">Create a unique username</p>
+            {% if user_exist %}
+              <p>{{user_exist}}<p>
+            {% endif %}
+        </div>
+        <input type="text" name="first_name" placeholder="First Name">
+        <input type="text" name="last_name" placeholder="Last Name" </div>
+        <div>
+            <input type="email" name="email" placeholder="Email">
+        </div>
+        <div>
+          <input type="tel" name="phone_number" placeholder="Phone Number">
+        </div>
+        <div>
+            <input type="password" name="password" placeholder="Password">
+            <p style="color:rgba(100,100,100, 0.8);">
+                Your password must contain the following <br>Uppercase letter <br> Symbols <br>Lowercase letters <br>numbers
+            </p>
+        </div>
+        <div>
+            <input type="submit" value="Sign up">
+        </div>
+</form>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'main_website/layout.html' %} {% block body %}
+  <h1>Type Of Account that you want to create</h1>
+  <div>
+    <a href="{% url 'users:create' %}">Student</a>
+  </div>
+  <div>
+      <a href="{% url 'users:create_property_account' %}">Property Owner</a>
+  </div>
+{% endblock %}
