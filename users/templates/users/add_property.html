@@ -1,0 +1,22 @@
+{% extends 'main_website/layout.html' %} {% block body %}
+    <form>
+        <div>
+            {{form.university_catered}}
+            <label for="university_catered"></label>
+        </div>
+        <div>
+            {{form.property_type}}
+        </div>
+        <div>
+            <h2>Facilities catered</h2>
+            {{form.facility_wifi}}
+            <label for="wifi">Unlimited Wifi</label>
+            {{form.facility_laundromat}}
+            <label for="laundromat">Laundromat</label>
+            {{form.facility_transport}}
+            <label for="transport">Transport</label>
+            {{form.facility_free_electricity}}
+            <label for="free-electricity">Free electricity</label>
+        </div>
+    </form>
+{% endblock %}

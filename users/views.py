@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User, Permission
 from django.contrib.auth import  authenticate, logout, login
 from .models import Student, Profiles, Identity
-from .forms import UploadPicture, UploadID, UploadBursaryLetter, UploadProofOfRegistration, PropertyGeneralInfo
+from .forms import UploadPicture, UploadID, UploadBursaryLetter, UploadProofOfRegistration, PropertyGeneralInfo, AddProperty
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.contenttypes.models import ContentType
 from django.db import IntegrityError
@@ -58,8 +58,18 @@ def create_property_owner_account(user_name, property_name, email, password,phon
     user_info = Student(user=user, phone_number=phone_number)
 
 # route to determine which type of user to create_user
+
+
 def account_creation_type(request):
-    return render(request,"users/account_creation_type.html")
+    return render(request, "users/account_creation_type.html")
+
+
+def add_property(request):
+    form_data = AddProperty()
+    return render(request, "users/add_property.html", {
+        "form": form_data
+    })
+
 
 def id_upload(request):
     """uploads the documents of the user"""

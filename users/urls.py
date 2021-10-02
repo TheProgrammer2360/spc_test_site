@@ -15,5 +15,6 @@ urlpatterns = [
     path("register_property_owner", views.register_property_owner, name="register_property_owner"),
     path("id_upload", views.id_upload, name="id_upload"),
     path("view_id_document", views.view_id_document, name="view_id_document"),
-    path("property_owner_profile", views.property_owner_profile, name="property_owner_profile")
+    path("property_owner_profile", views.property_owner_profile, name="property_owner_profile"),
+    path("add_property", views.add_property, name="add_property")
 ]
