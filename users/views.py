@@ -4,7 +4,8 @@ from django.urls import reverse
 from django.contrib.auth.models import User, Permission
 from django.contrib.auth import  authenticate, logout, login
 from .models import Student, Profiles, Identity
-from .forms import UploadPicture, UploadID, UploadBursaryLetter, UploadProofOfRegistration, PropertyGeneralInfo, AddProperty
+from .forms import UploadPicture, UploadID, UploadBursaryLetter, UploadProofOfRegistration, PropertyGeneralInfo
+from .forms import AddPropertyForm
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.contenttypes.models import ContentType
 from django.db import IntegrityError
@@ -65,7 +66,7 @@ def account_creation_type(request):
 
 
 def add_property(request):
-    form_data = AddProperty()
+    form_data = AddPropertyForm()
     return render(request, "users/add_property.html", {
         "form": form_data
     })
@@ -80,13 +81,15 @@ def id_upload(request):
             save_id_document = Identity(user=request.user, document=form.cleaned_data["id_document"])
             save_id_document.save()
             # returning user to their profile
-            return render(request, "users/index.html",{
+            return render(request, "users/index.html", {
                 "id_upload_message": "You have successfully uploaded your ID",
-                "UploadPicture" : UploadPicture(),
+                "UploadPicture": UploadPicture(),
                 "bursary_letter": UploadBursaryLetter(),
                 "proof_of_registration": UploadProofOfRegistration,
                 "id": UploadID,
             })
+
+
 def view_id_document(request):
     print(request.user.identity.document.url)
     return render(request, "users/view_id_document.html",{

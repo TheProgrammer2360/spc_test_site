@@ -1,22 +1,45 @@
 {% extends 'main_website/layout.html' %} {% block body %}
-    <form>
+    <form method="post" action="">
         <div>
-            {{form.university_catered}}
-            <label for="university_catered"></label>
+            <label>Property Name</label>
+            {{form.property_name}}
         </div>
         <div>
+            <label>Email</label>
+            {{form.email}}
+        </div>
+        <div>
+            <label>Phone Number</label>
+            {{form.phone_number}}
+        </div>
+        <div>
+            <label>Property Type</label>
             {{form.property_type}}
         </div>
         <div>
-            <h2>Facilities catered</h2>
-            {{form.facility_wifi}}
-            <label for="wifi">Unlimited Wifi</label>
-            {{form.facility_laundromat}}
-            <label for="laundromat">Laundromat</label>
-            {{form.facility_transport}}
-            <label for="transport">Transport</label>
-            {{form.facility_free_electricity}}
-            <label for="free-electricity">Free electricity</label>
+            <label>University Catered</label>
+            {{form.university_catered}}
         </div>
+        <div>
+            <h3>Facilities catered</h3>
+            {{form.laundromat}}
+            <label for="id_laundromat">Laundromat</label>
+            {{form.unlimited_wifi}}
+            <label for="id_unlimited_wifi">Unlimited wifi</label>
+            {{form.transport}}
+            <label for="id_transport">Transport</label>
+            {{form.free_electricity}}
+            <label for="free_electricity" >Free electricity</label>
+        </div>
+        <hr>
+        <div>
+            <h2>Property address</h2>
+            {{form.street}}
+            {{form.town}}
+            {{form.postal_code}}
+            {{form.province}}
+        </div>
+        <input type="submit" value="Add property">
     </form>
+
 {% endblock %}

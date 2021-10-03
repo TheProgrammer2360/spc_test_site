@@ -1,5 +1,6 @@
 from django import forms
-
+from django.forms import ModelForm
+from .models import AddProperty
 
 class UploadPicture(forms.Form):
     profile_picture = forms.ImageField()
@@ -19,48 +20,34 @@ class UploadProofOfRegistration(forms.Form):
 # form for adding the property
 
 
-PROPERTY_CHOICES = (
-        ("COMMUNE", "Commune"),
-        ("APARTMENT", "Apartment"),
-        ("FLAT", "flat")
-)
-
-UNIVERSITY_CHOICES = (
-    ("UJ", "UJ"),
-    ("NWU", "NWU"),
-    ("TUT", "TUT"),
-    ("WITS", "WITS"),
-    ("UP", "WITS"),
-    ("CUT", "CUT"),
-    ("VUT", "VUT"),
-    ("UWC", "UWC"),
-    ("UFS", "UFS"),
-)
-
-
-class AddProperty(forms.Form):
-    property_email = forms.CharField(widget=forms.EmailInput(attrs={
-        "placeholder": "email",
-    }))
-    property_phone_number = forms.CharField(widget=forms.NumberInput(attrs={
-        "placeholder": "Phone number",
-    }))
-
-    property_type = forms.CharField(widget=forms.Select(choices=PROPERTY_CHOICES))
-    university_catered = forms.CharField(widget=forms.Select(choices=UNIVERSITY_CHOICES))
-    #  all the universities catered for
-    facility_wifi = forms.BooleanField(widget=forms.CheckboxInput(attrs={
-        "id": "wifi"
-    }))
-    facility_laundromat = forms.BooleanField(widget=forms.CheckboxInput(attrs={
-        "id": "laundromat",
-    }))
-    facility_transport = forms.BooleanField(widget=forms.CheckboxInput(attrs={
-        "id": "transport",
-    }))
-    facility_free_electricity = forms.BooleanField(widget=forms.CheckboxInput(attrs={
-        "id": "free-electricity",
-    }))
+class AddPropertyForm(ModelForm):
+    class Meta:
+        model = AddProperty
+        fields = ["property_name", "phone_number", "email", "property_type", "university_catered", "street", "town",
+                  "city", "postal_code", "province", "laundromat", "unlimited_wifi", "transport", "free_electricity"]
+# class AddProperty(forms.Form):
+#     property_email = forms.CharField(widget=forms.EmailInput(attrs={
+#         "placeholder": "email",
+#     }))
+#     property_phone_number = forms.CharField(widget=forms.NumberInput(attrs={
+#         "placeholder": "Phone number",
+#     }))
+#
+#     property_type = forms.ModelChoiceField(widget=forms.CheckboxSelectMultiple, choices=PROPERTY_CHOICES)
+#     university_catered = forms.CharField(widget=forms.Select(choices=UNIVERSITY_CHOICES))
+#     #  all the universities catered for
+#     facility_wifi = forms.BooleanField(widget=forms.CheckboxInput(attrs={
+#         "id": "wifi"
+#     }))
+#     facility_laundromat = forms.BooleanField(widget=forms.CheckboxInput(attrs={
+#         "id": "laundromat",
+#     }))
+#     facility_transport = forms.BooleanField(widget=forms.CheckboxInput(attrs={
+#         "id": "transport",
+#     }))
+#     facility_free_electricity = forms.BooleanField(widget=forms.CheckboxInput(attrs={
+#         "id": "free-electricity",
+#     }))
 
 # Form to register The property owner
 
