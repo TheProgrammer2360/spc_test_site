@@ -1,6 +1,7 @@
 from django import forms
-from django.forms import ModelForm
+from django.forms import ModelForm, TextInput, EmailInput, NumberInput, CheckboxInput
 from .models import AddProperty
+
 
 class UploadPicture(forms.Form):
     profile_picture = forms.ImageField()
@@ -23,8 +24,36 @@ class UploadProofOfRegistration(forms.Form):
 class AddPropertyForm(ModelForm):
     class Meta:
         model = AddProperty
-        fields = ["property_name", "phone_number", "email", "property_type", "university_catered", "street", "town",
-                  "city", "postal_code", "province", "laundromat", "unlimited_wifi", "transport", "free_electricity"]
+        fields = ["property_name", "email", "phone_number", "property_type", "university_catered", "address",
+                  "laundromat", "unlimited_wifi", "transport", "free_electricity",
+                  "single_male", "single_female", "sharing_male", "sharing_female"]
+        widgets = {
+            "property_name": TextInput(attrs={
+                "placeholder": "Property Name...",
+            }),
+            "email": EmailInput(attrs={
+                "placeholder": "Email...",
+            }),
+            "phone_number": NumberInput(attrs={
+                "placeholder": "Cell phone number...",
+            }),
+            "single_female": NumberInput(attrs={
+                "placeholder": "Single rooms",
+            }),
+            "single_male": NumberInput(attrs={
+                "placeholder": "Single rooms"
+            }),
+            "sharing_male": NumberInput(attrs={
+                "placeholder": "Sharing rooms",
+            }),
+            "sharing_female": NumberInput(attrs={
+                "placeholder": "Sharing rooms",
+            }),
+            "laundromat": CheckboxInput(attrs={
+                "id": "laundromat",
+            })
+        }
+
 # class AddProperty(forms.Form):
 #     property_email = forms.CharField(widget=forms.EmailInput(attrs={
 #         "placeholder": "email",
