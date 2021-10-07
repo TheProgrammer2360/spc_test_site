@@ -4,5 +4,9 @@
 <a href="{% url 'users:logout' %}">logout</a>
 <h1>{{user.first_name}}</h1>
 <!--Put additional property owners-->
+<ul>
+    <li>{{user.email}}</li>
+    <li>{{user.}}</li>
+</ul>
 <a href="{% url 'users:add_property' %}">add profile</a>
 {% endblock %}
