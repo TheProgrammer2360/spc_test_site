@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import ModelForm, TextInput, EmailInput, NumberInput, CheckboxInput
+from django.forms import ModelForm, TextInput, EmailInput, NumberInput, CheckboxInput, Textarea
 from .models import AddProperty
 
 
@@ -51,6 +51,10 @@ class AddPropertyForm(ModelForm):
             }),
             "laundromat": CheckboxInput(attrs={
                 "id": "laundromat",
+            }),
+            "address": Textarea(attrs={
+                "rows": "5",
+                "cols": "40",
             })
         }
 

@@ -6,9 +6,21 @@ from django.contrib.auth import authenticate, logout, login
 from .models import Student, Profiles, Identity
 from .forms import UploadPicture, UploadID, UploadBursaryLetter, UploadProofOfRegistration, PropertyGeneralInfo
 from .forms import AddPropertyForm
-from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.decorators import permission_required, login_required
 from django.contrib.contenttypes.models import ContentType
 from django.db import IntegrityError
+
+
+def add_permissions(permissions):
+    for permission in permissions:
+        try:
+            content_type = ContentType.objects.get_for_model(User)
+            Permission.objects.create(
+                codename=permission,
+                content_type=content_type,
+            )
+        except IntegrityError:
+            pass
 
 
 def create_user_account(user_name, name, email, password, last_name, phone_number):
@@ -17,19 +29,15 @@ def create_user_account(user_name, name, email, password, last_name, phone_numbe
     user.first_name = name
     user.last_name = last_name
     user.save()
-    try:
-        content_type = ContentType.objects.get_for_model(User)
-        Permission.objects.create(
-            codename="view_student_accounts",
-            content_type=content_type,
-            )
-    except IntegrityError:
-        pass
-    permission = Permission.objects.get(codename="view_student_accounts")
-    user.user_permissions.add(permission)
+    student_permissions = ["view_property", "apply_for_resident", "edit_student_information",
+                           "view_student_information", "upload_id"]
+    add_permissions(student_permissions)
+    for permission_name in student_permissions:
+        permission = Permission.objects.get(codename=permission_name)
+        user.user_permissions.add(permission)
     user_info = Student(user=user, phone_number=phone_number)
     user_info.save()
-    print(user.has_perm("auth.view_student_accounts"))
+    print(user.has_perm("auth.apply_for_resident"))
 
 
 def create_property_owner_account(user_name, property_name, email, password, phone_number):
@@ -39,16 +47,8 @@ def create_property_owner_account(user_name, property_name, email, password, pho
     user.first_name = property_name
     # create a permission if they are not there
     property_owner_permissions = ["view_property_account", "edit_property_account", "create_property", "view_property",
-                                  "edit_property"]
-    for permission in property_owner_permissions:
-        try:
-            content_type = ContentType.objects.get_for_model(User)
-            Permission.objects.create(
-                codename=permission,
-                content_type=content_type,
-            )
-        except IntegrityError:
-            pass
+                                  "edit_property", "view_student_application"]
+    add_permissions(property_owner_permissions)
     # adding the permissions to this users
     for permission_name in property_owner_permissions:
         permission = Permission.objects.get(codename=permission_name)
@@ -65,6 +65,8 @@ def account_creation_type(request):
     return render(request, "users/account_creation_type.html")
 
 
+@login_required(login_url="/users/login")
+@permission_required("auth.create_property")
 def add_property(request):
     form_data = AddPropertyForm()
     return render(request, "users/add_property.html", {
@@ -72,6 +74,8 @@ def add_property(request):
     })
 
 
+@login_required(login_url="users/login")
+@permission_required("auth.upload_id")
 def id_upload(request):
     """uploads the documents of the user"""
     if request.method == 'POST':
@@ -88,15 +92,18 @@ def id_upload(request):
                 "proof_of_registration": UploadProofOfRegistration,
                 "id": UploadID,
             })
+    else:
+        return HttpResponseRedirect("users:student_account")
 
 
+@login_required(login_url="/users/login")
 def view_id_document(request):
-    print(request.user.identity.document.url)
     return render(request, "users/view_id_document.html", {
         "url_p": request.user.identity.document.url,
     })
 
 
+@login_required(login_url="/users/login")
 def image_upload(request):
     """saves the file"""
     if request.method == 'POST':
@@ -114,16 +121,19 @@ def image_upload(request):
 
 def profile_info(request):
     # route for for when the user is logged in as Student
-    user_student_account = request.user.has_perm("auth.view_student_accounts")
+    user_student_account = request.user.has_perm("auth.view_student_information")
+    property_owner_account = request.user.has_perm("auth.view_property_account")
     if user_student_account:
         return HttpResponseRedirect(reverse("users:student_info"))
         # don't forget the on when the property owner is logged in
+    elif property_owner_account:
+        return HttpResponseRedirect("users:property_owner_profile")
     else:
         # when no one is logged in
         return HttpResponseRedirect(reverse("users:login"))
 
 
-@permission_required("auth.view_student_accounts")
+@permission_required("auth.view_student_information")
 def index(request):
     return render(request, "users/index.html", {
         "UploadPicture": UploadPicture(),
@@ -133,19 +143,16 @@ def index(request):
     })
 
 
+@login_required(login_url="/users/login")
 def student_details(request):
-    if request.user.is_authenticated:
-        # when user is a student
-        user_student_permission = request.user.has_perm("auth.view_student_accounts")
-        if user_student_permission:
-            return HttpResponseRedirect(reverse("users:student_info"))
-        else:
-            return render(request, "main_website/home.html", {
+    user_student_permission = request.user.has_perm("auth.view_student_information")
+    if user_student_permission:
+        return HttpResponseRedirect(reverse("users:student_info"))
+    else:
+        return render(request, "main_website/home.html", {
                 "Not_a_student": "You have logged in with a Property Owner account"
                                  ", please sign out and log in with ur user account",
             })
-    else:
-        return HttpResponseRedirect(reverse("users:login"))
 
 
 def login_view(request):
@@ -158,11 +165,15 @@ def login_view(request):
         if user is not None:
             # login in user
             login(request, user)
-            print("user_logged in")
-            return HttpResponseRedirect(reverse("users:student_info"))
+            # check if user is a student or property owner
+            is_student = user.has_perm("auth.view_student_information")
+            if is_student:
+                return HttpResponseRedirect(reverse("users:student_info"))
+            else:
+                return HttpResponseRedirect(reverse("users:property_owner_profile"))
         else:
             return render(request, "users/login.html", {
-                "message": "Invalid details"
+                "message": "Your username and password do not match"
             })
     return render(request, "users/login.html")
 
@@ -181,7 +192,7 @@ def create_account(request):
         except IntegrityError:
             # send message if the user is taken
             return render(request, "users/account_creation.html", {
-                "user_exist": "The username that you selected is already taken create a new one"
+                "user_exist": "The username that you have chosen is not available try another one"
             })
         # saving the phone number and creating additional user information
         return HttpResponseRedirect(reverse("users:login"))
@@ -202,6 +213,8 @@ def property_account(request):
         return render(request, "main_website/home.html", {
             "student_logged_in": student_logged_in,
         })
+    else:
+        return HttpResponseRedirect(reverse("users:property_owner_profile"))
 
 
 def create_property_account(request):
@@ -212,6 +225,7 @@ def create_property_account(request):
     })
 
 
+@login_required(login_url='/users/login')
 def logout_view(request):
     """Logs the user out"""
     logout(request)
@@ -240,6 +254,7 @@ def register_property_owner(request):
         # redirect the user to their profile
 
 
+@login_required(login_url="/users/login")
 @permission_required("auth.view_property_account")
 def property_owner_profile(request):
     user_logged = request.user

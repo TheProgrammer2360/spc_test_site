@@ -1,6 +1,7 @@
 {% extends 'main_website/layout.html' %}
 {% block body %}
 {% load static %}
+<a href="{% url 'users:logout' %}">logout</a>
 <h1>{{user.first_name}}</h1>
 <!--Put additional property owners-->
 <a href="#">add profile</a>
