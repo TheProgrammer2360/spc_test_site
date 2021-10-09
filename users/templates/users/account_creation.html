@@ -1,4 +1,4 @@
-{% extends 'main_website/layout.html' %} {% block body %}
+{% extends 'users/layout.html' %} {% block body %}
 <h1>Create Account</h1>
 <form action="{% url 'users:create' %}" method="POST">
     <div>
@@ -19,7 +19,8 @@
           <input type="tel" name="phone_number" placeholder="Phone Number">
         </div>
         <div>
-            <input type="password" name="password" placeholder="Password">
+            <input type="password" id="password" name="password" placeholder="Password">
+            <button type="button" id="show">show</button>
             <p style="color:rgba(100,100,100, 0.8);">
                 Your password must contain the following <br>Uppercase letter <br> Symbols <br>Lowercase letters <br>numbers
             </p>

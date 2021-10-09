@@ -1,3 +1,3 @@
 document.addEventListener("DOMContentLoaded", () => {
-    alert("hello killer prock")
-})
+    alert("welcome to the create account page");
+} )
