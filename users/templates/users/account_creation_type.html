@@ -1,9 +1,43 @@
-{% extends 'main_website/layout.html' %} {% block body %}
-  <h1>Type Of Account that you want to create</h1>
-  <div>
-    <a href="{% url 'users:create' %}">Student</a>
-  </div>
-  <div>
-      <a href="{% url 'users:create_property_account' %}">Property Owner</a>
-  </div>
-{% endblock %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'users/styles.css' %}" rel="stylesheet">
+    <title>Choose account</title>
+
+<!-- -- ----favicon------- -->
+<link rel="shortcut icon" type="image/png" href="Icons/spcFavicon.png">
+
+<!-- ------Style.css------ -->
+<link rel="stylesheet" href="{% static 'users/styles.css' %}">
+
+<!-- -------Font links------- -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+    <!-- --------Choose Account type------ -->
+
+    <section class="chooseAccountBox">
+
+        <h1 class="logInHeader">Choose account type</h1>
+
+        <a href="{% url 'users:create' %}" class="accountLink">
+            Student Account
+        </a>
+
+        <a href="{% url 'users:create_property_account' %}" class="accountLink">
+            Property Account
+        </a>
+    </section>
+
+</body>
+</html>

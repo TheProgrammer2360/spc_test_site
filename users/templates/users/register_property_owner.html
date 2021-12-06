@@ -1,25 +1,69 @@
-{% extends "main_website/layout.html"  %}
-
-{% block body %}
-  <form  action="{% url 'users:register_property_owner' %}" method="post">
-    {% csrf_token %}
-    <div>
-      {{form.property_username}}
-    </div>
-    <div>
-      {{form.property_email}}
-    </div>
-    <div>
-      {{form.property_name}}
-    </div>
-      <div>
-        {{form.property_phone}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load static %}
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="{% static 'users/styles.css' %}" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <title>Create a Company account</title>
+</head>
+<body>
+  <section>
+    <form  class="createStudentAccountFormProperty" action="{% url 'users:register_property_owner' %}" method="post">
+      {% csrf_token %}
+        <h1 class="logInHeader">Create a Company account</h1>
+        <p class="personalInfo">company information</p>
+        <div class="fillInAllDetails">Please fill all the required fields.</div>
+      <div class="inputDiv">
+        {{form.property_username}}
+        <p class="infoCannotBeUsed">Username cannot be used</p>
+             
+        <p class="requiredTextCreateAccount">*Required</p>
       </div>
-    <div>
-      {{form.password}}
-    </div>
-    <div>
-      <input type="submit" value="Create account">
-    </div>
-  </form>
-{% endblock %}
+      <div class="inputDiv">
+        {{form.property_name}}
+        <p class="requiredTextCreateAccount">*Required</p>
+      </div>
+      <div class="inputDiv">
+        {{form.property_email}}
+        <p class="requiredTextCreateAccount">*Required</p>
+        <p class="emailConfirmCreateAcc">A confirmation email will be sent to you.</p>
+      </div>
+        <div class="inputDiv">
+          {{form.property_phone}}
+        </div>
+      <div class="inputDiv PasswordMarginTo" >
+        {{form.password}}
+        <p class="confirmPasswordRequiredTextCreateAccount">*Required</p>
+        <p class="passwordRequirements">8 or more characters required,<br>
+        1 Upper case & 1 special figure</p>
+        <button class=confirmPasswordCreatingAccount" type="button" onclick="myFunction()">Show</button>
+
+      </div>
+      <div class="inputDiv confirmPasswordMarginTop">
+        <div >
+            <input class="userPassword" id="confrimUserPassword" type="password" name="confirm password" placeholder=" Confirm Password">
+            <p class="confirmPasswordRequiredTextCreateAccount">*Required</p>
+  
+            <button class="confirmPasswordCreatingAccount" type="button" onclick="myFunction()">Show</button>
+  
+        </div>
+
+        <div class="TsandCsDiv">
+                 
+          <p class="TsandCsText">By clicking 'Sign Up', you agree to all
+              <a href="#" class="TsandCslink">terms and conditions.</a> 
+          </p>
+      </div>
+      <div>
+        <button class="signUpProperties submitLinkSignUp">Sign Up</button>
+      </div>
+    </form>
+  </section>
+  
+</body>
+</html>

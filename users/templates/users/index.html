@@ -1,5 +1,286 @@
-{% extends 'main_website/layout.html' %} {% block body %}
-{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load static %}
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="{% static 'users/styles.css' %}" rel="stylesheet">
+  <title>{{request.user.first_name}}'s Profile</title>
+  <link rel="shortcut icon" type="image/png" href="Icons/spcFavicon.png">
+
+  <!-- ------Style.css------ -->
+  <link rel="stylesheet" href="new style.css">
+
+  <!-- -------Font links------- -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    {% if request.user.profiles.profile_picture.url %}
+      .profilePicture{
+      background-image: url("{{ request.user.profiles.profile_picture.url }}");
+      background-repeat:no-repeat;
+      background-size:cover;
+      background-position:right;
+      height:350px;
+      width:377px;
+
+      border-radius:10px;
+      outline:3px solid #FFB200;
+    }
+    {% elif request.user.student.gender == "MALE"%}
+    .profilePicture{
+      background-image: url("/static/images/maleAvatar.jpg");
+      background-repeat:no-repeat;
+      background-size:cover;
+      background-position:right;
+      height:350px;
+      width:377px;
+      outline:3px solid #FFB200;
+      border-radius:10px;
+    };
+    {% elif request.user.student.gender == "FEMALE"%}
+    .profilePicture{
+      background-image: url("/static/images/femaleAvatar.jpg");
+      background-repeat:no-repeat;
+      background-size:cover;
+      background-position:right;
+      height:350px;
+      width:377px;
+      outline:3px solid #FFB200;
+      border-radius:10px;
+    };
+    {% endif %}
+  </style>
+</head>
+<body class="bodyPadding">
+  <!--navbar-->
+  <nav class="navBar">
+    <a class="spcLogoLink" href="new index.html">
+        <img src="{% static 'main_website/logo.png' %}" class="spcLogo" alt="SPC logo">
+      </a>
+
+      <ul class="navBarRightPanel">
+        <il>
+            <a href="{% url 'main_app:home' %}" class="navItem">HOME</a>
+        </il>
+      
+        <il >
+            <a href="{% url 'users:student_details' %}" class="navItem activeLink">STUDENT</a>
+        </il>
+      
+        <il>
+            <a href="{% url 'users:property_account' %}" class="navItem">PROPERTY</a>
+        </il>
+        <il>
+            <a href="new log in.html" alt="AccountIcon">
+                <img src="{% static 'main_website/orange account icon.png' %}" class="accountIcon" alt="account Icon">
+            </a>
+            </il>
+        </il>
+    </ul>
+</nav>
+
+</div>
+</section>
+  <!-- --------hamburger javascript---- -->
+  <script>
+    const navBarMobile = document.querySelector(".navBarMobile");
+    const menuItems = document.querySelectorAll(".menuItem");
+    const hamburger= document.querySelector(".hamburger");
+    const closeMenu= document.querySelector(".closeMenu");
+    const hamburgerMenu = document.querySelector(".hamburgerMenu");
+
+    function toggleMenu() {
+    if (navBarMobile.classList.contains("showMenu")) {
+        navBarMobile.classList.remove("showMenu");
+        closeMenu.style.display = "none";
+        hamburgerMenu.style.display = "block";
+    } else {
+        navBarMobile.classList.add("showMenu");
+        closeMenu.style.display = "block";
+        hamburgerMenu.style.display = "none";
+    }
+    }
+
+    hamburger.addEventListener("click", toggleMenu);
+</script>
+
+<!--------------------------Student Account section------------------------->
+<section>
+  <h2 class="sectionHeader studentDetailsHeader">Student Account</h2>
+  
+  <!--delete-->
+  <div class="studentInformationHeader">
+      <div class="profilePictureDiv">
+          <div class="profilePicture">
+
+          </div>
+          <form action="{% url 'users:image_upload' %}" enctype="multipart/form-data" method="post"></form>
+            <div class="uploadProfilePicture">
+            
+            {% csrf_token %}
+            <label class="custom-file-upload uploadProfilePicture">
+              {{UploadPicture}}
+              </label>
+              <div class="savePictureDiv">
+                <button class="custom-file-upload saveProfilePicture">Save profile picture</button>
+            </div>
+            </form>
+
+              upload profile picture
+          </div>
+
+      </div>
+
+      <div class="rightInformationPanel">
+          <div>
+              <h1 class="studentName">{{request.user.first_name}}</h1>   
+                <h3 class="studentLastName">{{request.user.last_name}}</h3>
+          </div>
+      </div>
+
+      <div class="studentEditButtons">
+          <button class="logInButton signUpProperties " >
+              <a href="{% url 'users:logout' %}" class="submitLink">Sign Out</a>
+          </button>
+
+          <button class="logInButton signUpProperties editProfileWidth" >
+              <a href="{% url 'users:edit_student_profile' %}" class="submitLink">Edit Profile</a>
+          </button>
+      </div>
+
+  </div>
+
+</section>
+<!-- ------student details------- -->
+<section class="studentDetailsSection">
+  <h2 class="sectionHeader studentDetailsHeader">Student Details</h2>
+
+  <div class="studentDetailsFlexBox">
+      <div class="studentImportantInformationLeftPanel">
+
+          <div class="informationDiv">
+              <p>Username</p>
+              <div class="infoAboutStudent">
+                {{request.user.username}}
+              </div>
+          </div>
+
+          <div class="informationDiv">
+              <p>Email</p>
+              <div class="infoAboutStudent">
+                {{request.user.email}}
+              </div>
+          </div>
+
+          <div class="informationDiv">
+              <p>Cellphone number</p>
+              <div class="infoAboutStudent">
+                {{request.user.student.phone_number}}
+              </div>
+          </div>
+      </div>
+
+      <div class="studentImportantInformationRightPanel">
+          <div class="informationDiv">
+              <p>Name</p>
+              <div class="infoAboutStudent infoAboutStudentRight">
+                {{request.user.first_name}}
+              </div>
+          </div>
+
+          <div class="informationDiv">
+              <p>Last Name</p>
+              <div class="infoAboutStudent infoAboutStudentRight">
+                {{request.user.last_name}}
+              </div>
+          </div>
+          <div class="informationDiv ">
+            <p>Gender</p>
+            <div class="infoAboutStudent  infoAboutStudentRight">
+                {{request.user.student.gender}}
+            </div>
+      </div>
+
+  </div>
+</section>
+<section>
+  <h2 class="sectionHeader ">Student Documents</h2>
+
+  <p class="studentDocumentBrief">The documents uploaded by the student will not be shared with any property 
+      owner or anyone. They will be used to secure a room in a booked accommodation.</p>
+
+      <div class="suggestionDiv">
+          <img class="suggestionIcon" src="{% static 'main_website/newIdeaIcon.png' %}">
+
+          <p class="studentDocumentBrief">Upload your documents to avoid carrying them when you move in</p>
+      </div>
+
+      <div class="documentsFlexBox">
+          <div>
+              <div class="documentDiv">
+                  <h3 class="documentHeader">Identification card (ID)</h3>
+                  <img class="documentIcon" src="{% static 'main_website/document icon.png' %}">
+              </div>
+
+              <div class="documentButtonsDiv">
+                  <a href="#" class="documentUpload">
+                      <input type="file" placeholder="Upload">
+                  </a>
+
+                  <a href="#" class="documentPreview">
+                      Pre View
+                  </a>
+              </div>    
+          </div>
+
+
+          <div>
+              <div class="documentDiv">
+                  <h3 class="documentHeader">NSFAS/ Bursary letter</h3>
+                  <img class="documentIcon" src="{% static 'main_website/document icon.png' %}">
+              </div>
+
+              <div class="documentButtonsDiv">
+                  <a href="#" class="documentUpload">
+                      <input type="file" placeholder="Upload">
+                  </a>
+
+                  <a href="#" class="documentPreview">
+                      Pre View
+                  </a>
+              </div>    
+          </div>
+
+
+          <div>
+              <div class="documentDiv">
+                  <h3 class="documentHeader">Proof of registration</h3>
+                  <img class="documentIcon" src="{% static 'main_website/document icon.png' %}">
+              </div>
+
+              <div class="documentButtonsDiv">
+                  <a href="#" class="documentUpload">
+                      <input type="file" placeholder="Upload">
+                  </a>
+
+                  <a href="#" class="documentPreview">
+                      Pre View
+                  </a>
+              </div>    
+          </div>
+
+
+      </div>
+
+
+</section>
+
+</body>
+</html>
+
 <h1>{{request.user.username}}</h1>
 <form action="{% url 'users:image_upload' %}" enctype="multipart/form-data" method="post">
   {% csrf_token %}
@@ -9,15 +290,7 @@
   {% if id_upload_message %}
     <p>{{id_upload_message}}</p>
   {% endif %}
-  <h2>Profile</h2>
 
-   <img src="{{ request.user.profiles.profile_picture.url }}" alt="Picture" width="200" height="300">
-
-<ul>
-    <li>Phone Number: {{request.user.student.phone_number}}</li>
-    <li>First Name: {{request.user.first_name}}</li>
-    <li>Last Name: {{request.user.last_name}}</li>
-    <li>Email: {{request.user.email}}</li>
 </ul>
 <hr>
 <h2>Documents</h2>
@@ -50,4 +323,4 @@
 
 </div>
 <a href="{% url 'users:logout' %}">log Out</a>
-      {% endblock %}
+

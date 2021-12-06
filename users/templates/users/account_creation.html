@@ -1,32 +1,90 @@
-{% extends 'users/layout.html' %} {% block body %}
-<h1>Create Account</h1>
-<form action="{% url 'users:create' %}" method="POST">
-    <div>
-        {% csrf_token %}
-        <div>
-            <input type="text" name="user_name" placeholder="Username">
-            <p style="color:rgba(100, 100, 100, 100);">Create a unique username</p>
-            {% if user_exist %}
-              <p>{{user_exist}}<p>
-            {% endif %}
-        </div>
-        <input type="text" name="first_name" placeholder="First Name">
-        <input type="text" name="last_name" placeholder="Last Name" </div>
-        <div>
-            <input type="email" name="email" placeholder="Email">
-        </div>
-        <div>
-          <input type="tel" name="phone_number" placeholder="Phone Number">
-        </div>
-        <div>
-            <input type="password" id="password" name="password" placeholder="Password">
-            <button type="button" id="show">show</button>
-            <p style="color:rgba(100,100,100, 0.8);">
-                Your password must contain the following <br>Uppercase letter <br> Symbols <br>Lowercase letters <br>numbers
-            </p>
-        </div>
-        <div>
-            <input type="submit" value="Sign up">
-        </div>
-</form>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'users/styles.css' %}" >
+    <title>create student account</title>
+    <link rel="shortcut icon" type="image/png" href="Icons/spcFavicon.png">
+    <script src="{% static 'users/creation.js' %}"></script>
+
+<!-- ------Style.css------ -->
+<link rel="stylesheet" href="new style.css">
+
+<!-- -------Font links------- -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <section>
+        <form action="{% url 'users:create' %}" method="POST" class="createStudentAccountForm">
+            <h1 class="logInHeader">Create a student account</h1>
+            <p class="personalInfo">personal information</p>
+                {% csrf_token %}
+                <div class="fillInAllDetails">Please fill all the required fields.</div>
+                <div class="inputDiv">
+                    {{form.user_name}}
+                    {% if user_exist %}
+                        <p class="infoCannotBeUsed">Username cannot be used</p>
+                    {% endif %}
+                    <p class="requiredTextCreateAccount">*Required</p>
+                </div>
+                <div class="inputDiv">
+                    {{form.name}}
+                    <p class="requiredTextCreateAccount">*Required</p>
+                </div>
+                <div class="inputDiv">
+                    {{form.last_name}}
+                    <p class="requiredTextCreateAccount">*Required</p>
+                </div>
+                <div class="inputDiv">
+                    {{form.email}}
+                    <p class="requiredTextCreateAccount">*Required</p>
+                    <p class="emailConformation">A confirmation email will be sent to you.</p>
+                </div>
+                <div class="cellphoneNumberBox inputDiv">
+                    {{form.phone_number}}
+                </div class="inputDiv">
+                <div class="inputDiv">
+                    {{form.gender}}
+                    <p class="genderRequiredTextCreateAccount">*Required</p>
+                </div>
+                <div>
+                    {{form.password}}
+                    <p class="confirmPasswordRequiredTextCreateAccount">*Required</p>
+                    <p class="passwordRequirements">8 or more characters required,<br>
+                    <button class="showPasswordCreatingAccount" type="button">Show</button>
+                        <!-- ------Javascript for password visibility------ -->
+        
+        
+                    <p class="requiredTextCreateAccount">*Required</p>
+                    <p class="emailConformation">8 or more characters required,<br>
+                        1 Upper case & 1 special figure</p>
+               
+                </div>
+                <div class="inputDiv confirmPasswordMarginTop">
+                    <div >
+                        <input class="userPassword" id="confrimUserPassword" type="password" name="confirm password" placeholder=" Confirm Password">
+                        <p class="confirmPasswordRequiredTextCreateAccount">*Required</p>
+        
+                        <button class="confirmPasswordCreatingAccount" id="confirm" type="button">Show</button>
+        
+                    </div>
+                    <div class="TsandCsDiv">
+               
+                        <p class="TsandCsText">By clicking 'Sign Up', you agree to all
+                            <a href="#" class="TsandCslink">terms and conditions.</a> 
+                        </p>
+                    </div>
+                <div>
+                    
+            <button class="submitLinkSignUp signUpProperties" >Sign Up</button>   
+               
+        </form>
+    </section>
+
+</body>
+</html>

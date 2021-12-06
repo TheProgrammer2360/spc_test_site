@@ -1,4 +1,235 @@
-{% extends 'main_website/layout.html' %} {% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPC HLALA NATHI</title>
+
+<!-- ----favicon------- -->
+<link rel="shortcut icon" type="image/png" href="Icons/spcFavicon.png">
+
+<!-- ------Style.css------ -->
+<link rel="stylesheet" href="{% static 'users/styles.css' %}" >
+
+<!-- -------Font links------- -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body class="bodyPadding">
+    <!-- ------nav bar---- -->
+    <nav class="navBar">
+        <a class="spcLogoLink" href="new index.html">
+            <img src="{% static 'main_website/logo.png' %}" class="spcLogo" alt="SPC logo">
+          </a>
+
+          <ul class="navBarRightPanel">
+            <il>
+                <a href="{% url 'main_app:home' %}" class="navItem activeLink">HOME</a>
+            </il>
+          
+            <il >
+                <a href="{% url 'users:student_details' %}" class="navItem">STUDENT</a>
+            </il>
+          
+            <il>
+                <a href="{% url 'users:property_account' %}" class="navItem">PROPERTY</a>
+            </il>
+            <il>
+                <a href="new log in.html" alt="AccountIcon">
+                    <img src="{% static 'main_website/orange account icon.png' %}" class="accountIcon" alt="account Icon">
+                </a>
+                </il>
+            </il>
+        </ul>
+    </nav>
+    {% for message in messages %}
+    <div class="message {{ message.tags }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+    <!-- -------Search section-------- -->
+    <section class="searchSection">
+        
+            <input class="searchBox" type="search" name="searchType" placeholder="Search accommodation">
+            <button type="submit" class="searchButton">
+                <img class="searchIcon" src="{% static 'main_website/searchIcon.svg' %}"> 
+            </button>
+            
+        
+    
+        <div class="quickSearch">
+            <ul class="searchList">
+                <li class="searchItems">Accommodation type 
+                    <img class="searchDropdown"  src="{% static 'main_website/dropdown arrow.png' %}">
+                </li>
+
+                <li class="searchItems">Varsity 
+                    <img class="searchDropdown"  src="{% static 'main_website/dropdown arrow.png' %}">
+                </li>
+
+                <li class="searchItems">Gender 
+                    <img class="searchDropdown"  src="{% static 'main_website/dropdown arrow.png' %}">
+                </li>
+            </ul>
+
+            <button class="quickSearchButton" type="Search" >Search</button>
+        </div>
+    </section>
+
+    <!-- -------header section------- -->
+    
+    <section>
+        <div class="headerBackground"></div>
+        <h1 class="headerText">We have an <br>
+            accommodation<br> 
+            ready for you</h1>
+    </section>
+
+    <!-- -------Our properties------ -->
+
+    <section>
+        <h2 class="sectionHeader">Our Properties</h2>
+
+        <div class="threeContainerFlexBox">
+            <a href="#">
+                <div class="flexItem">
+                    <div class="boxImage"></div>
+    
+                    <div class="blackBox">
+                        <h2 class="boxText">Apartments</h2>
+                    </div>
+                    
+                </div>
+            </a>
+
+            <a href="#">
+                <div class="flexItem">
+                    <div class="boxImage2"></div>
+    
+                    <div class="blackBox">
+                        <h2 class="boxText">Cummunes</h2>
+                    </div>
+                    
+                </div>
+            </a>
+
+            <a href="#">
+                <div class="flexItem">
+                    <div class="boxImage3"></div>
+    
+                    <div class="blackBox">
+                        <h2 class="boxText">High flats</h2>
+                    </div>
+                    
+                </div>
+            </a>
+
+        </div>
+    </section>
+
+    <!-- -------Student community------- -->
+    <section>
+        <h2 class="sectionHeader studentCommunity">Student Community</h2>
+
+        <div class="threeContainerFlexBox">
+
+            <a href="#">
+                <div class="flexItem">
+                    <div class="boxImage4"></div>
+    
+                    <div class="blackBox">
+                        <h2 class="boxText">Textbooks</h2>
+                    </div>
+                    
+                </div>
+            </a>
+            
+            <a href="#">
+                <div class="flexItem">
+                    <div class="boxImage5"></div>
+    
+                    <div class="blackBox">
+                        <h2 class="boxText">Tutoring</h2>
+                    </div>
+                    
+                </div>
+            </a>
+            
+            <a href="#">
+                <div class="flexItem">
+                    <div class="boxImage6"></div>
+    
+                    <div class="blackBox">
+                        <h2 class="boxText">Career Coach</h2>
+                    </div>
+                    
+                </div>
+            </a>
+           
+        </div>
+
+    </section>
+
+    <!-- -----advert section----- -->
+    <section>
+        <div class="advertSection"></div>
+    </section>
+
+     <!-- -----Add property----- -->
+     <section>
+         <div class="propertySignIn">
+             <h2>Properties owners must Sign In to add a property</h2>
+             <a class="SignInLink" href="#">Sign In</a>
+         </div>
+     </section>
+     <!-- -----footer----- -->
+     <footer class="footerBackground">
+         <div class="footerHeader">
+             <a href="new index.html">
+                <img class="footerLogo" src="{% static 'main_website/logo.png' %}">
+             </a>
+           
+
+            <div class="footerSocialMediaLinks">
+                <a href="#"> <img class="SocialMediaIcon" src="{% static 'main_website/facebookIcon.png' %}"></a>
+                <a href="#"> <img class="SocialMediaIcon" src="{% static 'main_website/instagramIcon.png' %}"></a>
+            </div>
+         </div>
+
+<ul class="footerList">
+    <a href="#">
+        <li class="footerListItem">About us</li>
+    </a>
+
+
+    <a href="#">
+        <li class="footerListItem">FAQ</li>
+    </a>
+
+    <a href="#">
+        <li class="footerListItem">Contact us</li>
+    </a>
+
+    <a href="#">
+        <li class="footerListItem">list your accommodation</li>
+    </a>
+
+    <a href="#">
+        <li class="footerListItem">Advertising</li>
+    </a>
+    
+</ul>
+
+<p class="footerFooter">Student placement corporation | 2021</p>
+
+     </footer>
+</body>
+</html>
 {% if Not_a_student %}
 
 <h4>{{Not_a_student}}</h4>
@@ -7,4 +238,4 @@
 {% if student_logged_in %}
   <p style="color:red;">{{student_logged_in}} <a href="{% url 'users:logout' %}">logout</a></p>
 {% endif %}
-{% endblock %}
+

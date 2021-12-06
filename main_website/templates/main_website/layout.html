@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <!--create your nav here in order to make sure that it always apears on all pages-->
+    
     <nav>
         <a href="{% url 'users:account_type' %}">Profile</a>
         <a href="{% url 'main_app:home' %}">Home</a>
@@ -20,7 +20,7 @@
         <a href="{% url 'users:property_account' %}">Property</a>
     </nav>
     {% block body %}{% endblock %}
-    <!--U can create a footer under this as well so that u dont have to create it every time-->
+   
 </body>
 
 </html>

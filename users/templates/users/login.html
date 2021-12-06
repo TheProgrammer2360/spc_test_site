@@ -1,13 +1,61 @@
-{% extends 'main_website/layout.html' %} {% block body %}
+{% extends 'users/layout_login.html' %} {% block body %}
 <!--This is the login page you can create ur id's and classes on the elements here and style them on the styles.css on this app-->
-<h1>Log in</h1>
-{% if message %}
-<p>Invalid details please try again <a href="#">forgot password</a></p>
-{% endif %}
-{% if logout_message %}
-  	<p>{{logout_message}}</p>
-{% endif %}
-<form action="{% url 'users:login' %}" method="POST">
+
+
+    {% if logout_message %}
+  	    <p>{{logout_message}}</p>
+    {% endif %}
+    <section class="loginInFlex">
+        <form class="logInForm" action="{% url 'users:login' %}" method="POST">
+            <h1 class="logInHeader">Enter details to Log In</h1>
+            {% if message %}
+                <div class="invalidUsername">Invalid user credientials</div>
+                <p class="requiredText">*Required</p>
+            {% endif %}
+        {% csrf_token %}
+        <div class="inputDiv">
+            <input type="text" name="user_name" placeholder="Username" class="UsernameInput"> <!--user_name == usernameLogin-->
+            <p class="requiredText">*Required</p>
+        </div>
+            <!-----------------password------------------>
+        <div class="passwordDiv">
+            <input type="password" name="password" class="userPassword" id="userPassword" placeholder="Password">
+            
+            <button class="showPassword" type="button" onclick="myFunction()">Show</button>
+        </div>
+            
+        <script>
+            function myFunction() {
+              var x = document.getElementById("userPassword");
+              if (x.type === "password") {
+                x.type = "text";
+              } else {
+                x.type = "password";
+              }
+            }
+            </script>
+                                <!-- ------Javascript for password visibility------ -->
+        <!--Login button-->
+       <div class="logInFooter">
+           <button class="logInButton" type="submit" value="Submit">Log In</button>
+           <a href="{% url 'users:password_reset' %}" class="forgotPassword">
+               <p>Forgot password?</p>
+           </a>
+       </div>
+        <h3 class="blackText">
+            Don't have an account?
+            <span>
+                <a class="whiteText"  href="{% url 'users:account_creation_type' %}">Sign Up here</a>
+            </span>
+        </h3>
+        
+    </form>
+    </section>
+
+    <!--username-->
+{% endblock%}
+
+<!-- <form action="{% url 'users:login' %}" method="POST">
     {% csrf_token %}
     <div>
         <input type="text" name="user_name" placeholder="Username">
@@ -17,4 +65,5 @@
     </div>
     <input type="submit" value="login">
 </form>
-<a href="{% url 'users:account_creation_type' %}">Create account</a> {% endblock %}
+<a href="{% url 'users:account_creation_type' %}">Create account</a>
+ss -->
