@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'users/styles.css' %}" >
+    <title>Document</title>
+</head>
+<body class='bodyPadding tablet'>
+    <nav class="navBar">
+        <a class="spcLogoLink" href="index.html">
+            <img src="{% static 'main_website/logo.png' %}" class="spcLogo" alt="SPC logo">
+          </a>
+
+          <ul class="navBarRightPanel navBarMobile">
+
+            <li>
+                <div class="searchDIV">
+                    <input class="searchBox profileSearchBox menuItem" type="search" name="searchType" placeholder="Search accommodation">
+                    <button type="submit" class="searchButton menuItem profileSearchIcon">
+                        <img class="searchIcon  propertySearchIcon" src="{% static 'main_website/searchIcon.svg' %}"> 
+                    </button>
+                </div>
+            </li>
+
+            <il>
+                <a href="{% url 'main_app:home' %}" class="navItem menuItem">HOME</a>
+            </il>
+          
+            <il >
+                <a  href="{% url 'users:student_details' %}" class="navItem  hideStudent menuItem">STUDENT</a>
+            </il>
+          
+            <il>
+                <a href="{% url 'users:property_account' %}" class="navItem showProperty activeLink menuItem">PROPERTY</a>
+            </il>
+
+            <il>
+                <a href="{% url 'users:property_account' %}"  alt="AccountIcon">
+                    <img src="{% static 'main_website/orange account icon.png' %}" class="accountIcon" alt="account Icon">
+                </a>
+                </il>
+            </il>
+        </ul>
+
+        <button class="hamburger">
+            <img class="hamburgerMenu" src="{% static 'main_website/hamburgerMenu.svg' %}">
+            <img class="closeMenu" src="{% static 'main_website/closeMenu.svg' %}">
+
+        </button>
+    </nav>
+    <!-- --------hamburger javascript---- -->
+    <script>
+        const navBarMobile = document.querySelector(".navBarMobile");
+        const menuItems = document.querySelectorAll(".menuItem");
+        const hamburger= document.querySelector(".hamburger");
+        const closeMenu= document.querySelector(".closeMenu");
+        const hamburgerMenu = document.querySelector(".hamburgerMenu");
+
+        function toggleMenu() {
+        if (navBarMobile.classList.contains("showMenu")) {
+            navBarMobile.classList.remove("showMenu");
+            closeMenu.style.display = "none";
+            hamburgerMenu.style.display = "block";
+        } else {
+            navBarMobile.classList.add("showMenu");
+            closeMenu.style.display = "block";
+            hamburgerMenu.style.display = "none";
+        }
+        }
+
+        hamburger.addEventListener("click", toggleMenu);
+</script>
+<section class="propertymobileBottomPadding">
+    <h2 class="sectionHeader">Property Account</h2>
+
+<div class="studentInformationHeader">
+
+    <div class="profilePictureDiv">
+            <img class="studentAvatar CompanyAvatar" src="{{ property.main_picture.url }}" alt="no picture">
+           
+       <div class="uploadPictureDiv propertyDivMobilePosition ">
+            <label class="custom-file-upload uploadProfilePicture accreditedButton">
+                <img class="verifiedIcon" src="{% static 'main_website/verifiedAccommodation.svg' %}">
+                Accredited
+            </label>
+        </div>
+
+
+    </div>
+    <div class="rightInformationPanel companyRightInformationPanel">
+        <div class="nameAndSurname">
+            <h1 class="companyName propertyNameMobile">{{property.property_name}}
+            </h1>
+            <h3 class="studentLastName propertyType">{{property.property_type}}</h3>
+
+            <div class="propertyDescriptionDiv mobileViewDescription">
+                Property description
+                {{property.discription}}
+            </div>
+    
+        </div>
+
+        <div class="editButtons propertyEditButtons">
+
+            <button class="logInButton signUpProperties signOutProfileWidth bookingsTabletView" >
+                <a href="{% url 'users:book_room' property.id %} class="profileLinks">Book</a>
+            </button>
+            <a class="profileLinks logInButton signUpProperties editProperty accreditedButton">{{property.price}}</a>
+        </div>
+    </div>
+    </div>
+            <!-- ------company properties------ -->
+
+            <section class="companyPropertiesSection">
+                <h2 class="sectionHeader studentDetailsHeader">Property images</h2>
+    
+                <div class="companyPropertiesFlexBox">
+    
+                   
+                        <div class="propertyDiv">
+                            <img class="propertyImage" src="{{ property.room_picture.url }}">
+        
+                            <div class="propertyName">Bedroom image </div>
+                        </div>
+                   
+    
+                   
+                        <div class="propertyDiv">
+                            <img class="propertyImage" src="{{property.kitchen_picture.url}}">
+        
+                            <div class="propertyName">Kitchen image</div>
+                        </div>
+    
+                        <div class="propertyDiv">
+                            <img class="propertyImage" src="{{property.study_room_picture.url}}">
+    
+                            <div class="propertyName">study area</div>
+                        </div>
+                        </div>
+    
+            </section>
+             <!-- ---company details section---- -->
+
+        <section>
+            <h2 class="sectionHeader">Property Details</h2>
+
+            <div class="studentDetailsFlexBox companyDetailsMobilePadding">
+                <div class="studentImportantInformationLeftPanel">
+
+                    <div class="companyInformationDiv">
+                        <p>Price</p>
+                        <div class="infoAboutCompany">
+                           R4 287.00
+
+                        </div>
+                    </div>
+
+                    <div class="companyInformationDiv">
+                        <p>Property address</p>
+                        <div class="infoAboutCompany">
+                            {{property.address}}
+                        </div>
+                    </div>
+
+                    <div class="companyInformationDiv">
+                        <p>Property name</p>
+                        <div class="infoAboutCompany">
+                            {{property.property_name}}
+                        </div>
+                    </div>
+
+                    <div class="companyInformationDiv">
+                        <p>Property type</p>
+                        <div class="infoAboutCompany">
+                            {{property.property_type}}
+                        </div>
+                    </div>
+
+                
+                </div>
+                
+                <div class="companyImportantInformationRightPanel">
+
+                    <div class="companyInformationDiv companyInformationDivRight informationDivMobile">
+                        <p>Female Units Available</p>
+                        <div class="infoAboutCompany  infoAboutCompanyRight">
+
+                            <div class="VarsityList">
+
+
+                                <div>
+                                    <p class="singleRooms">Sharing Rooms: <span>{{property.sharing_female}}</span></p>
+                                </div>
+
+                                <div>
+                                    <p class="singleRooms">Single Rooms: <span>{{property.single_female}}</span></p>
+                                </div>
+                              
+
+                               
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="companyInformationDiv companyInformationDivRight informationDivMobile">
+                        <p>Male Units Available</p>
+                        <div class="infoAboutCompany  infoAboutCompanyRight">
+
+                            <div class="VarsityList">
+
+
+                                <div>
+                                    <p class="singleRooms">Sharing Rooms: <span>{{property.sharing_male}}</span></p>
+                                </div>
+
+                                <div>
+                                    <p class="singleRooms">Single Rooms: <span>{{property.single_male}}</span></p>
+                                </div>
+                              
+
+                               
+                            </div>
+
+                       
+                        </div>
+                    </div>
+                    <div class="companyInformationDiv companyInformationDivRight informationDivMobile">
+                        <p>Universities catered</p>
+                        <div class="infoAboutCompany  infoAboutCompanyRight">
+
+                            <div class="VarsityList">
+                                <p class="cateredVarsity">{{property.university_catered}}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="companyInformationDiv companyInformationDivRight informationDivMobile">
+                        <p>Facilities catered</p>
+                        <div class="infoAboutCompany  infoAboutCompanyRight">
+
+                            <div class="VarsityList">
+                                <p class="cateredVarsity">Unlimited WIFI</p>
+                                <p class="cateredVarsity cateredVarsityColor">24 hour security</p>
+                                <p class="cateredVarsity">Transport</p>
+                                <p class="cateredVarsity cateredVarsityColor">hot running water</p>
+                                <p class="cateredVarsity">Free electricity</p>
+                                <p class="cateredVarsity cateredVarsityColor">Laundromat</p>
+
+                               
+                            </div>
+
+                        <p class="defaultUniversity">No Facilities catered</p>
+                       
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <hr class="documentsAndDetailsSeperator">
+        </section>
+        <section class="propertyDocumentSection">
+            <h2 class="sectionHeader ">Do you have a question about this accommodation?</h2>
+        
+            <p class="studentDocumentBrief">SPC will contact the property on your behalf and get back to the you via email.</p>
+        
+            <div student="queryArea">
+           
+                <textarea class="typeQuestionHere" rows="4" cols="50" maxlength="2000"> type your question here...</textarea>
+        
+                <div>
+                    <input class="emailQuestion" type="email" name="usernameLogIn" placeholder="email">
+                </div>
+        
+                <button class="sendEmailButton">
+                    Send
+                </button>
+                
+        
+            </div>
+               
+        
+        </section>
+                     <!-- -----Add property----- -->
+     <section>
+        <div class="addAProperty">
+            <h2>Click on "<span>Sign Up</span>" to create Student account.</h2>
+            <a class="addPropertyButton" href="create student account.html">Sign Up</a>
+        </div>
+    </section>
+
+         <!-- -----footer----- -->
+         <footer class="footerBackground">
+            <div class="footerHeader">
+                <a href="index.html">
+                   <img class="footerLogo" src="images/logo.png">
+                </a>
+              
+   
+               <div class="footerSocialMediaLinks">
+                   <a href="#"> <img class="SocialMediaIcon" src="Icons/facebookIcon.png"></a>
+                   <a href="#"> <img class="SocialMediaIcon" src="Icons/instagramIcon.png"></a>
+               </div>
+            </div>
+   
+   <ul class="footerList">
+       <a href="#">
+           <li class="footerListItem">About us</li>
+       </a>
+   
+   
+       <a href="#">
+           <li class="footerListItem">FAQ</li>
+       </a>
+   
+       <a href="#">
+           <li class="footerListItem">Contact us</li>
+       </a>
+   
+       <a href="#">
+           <li class="footerListItem">list your accommodation</li>
+       </a>
+   
+       <a href="#">
+           <li class="footerListItem">Advertising</li>
+       </a>
+       
+   </ul>
+   
+   <p class="footerFooter">Student placement corporation | 2021</p>
+   
+        </footer>
+
+</body>
+</html>

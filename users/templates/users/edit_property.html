@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% if error_message %}
+        <p>{{error_message}}</p>
+    {% endif %}
+    <form method="post" action="{% url 'users:edit_property' property_number %}" enctype="multipart/form-data">
+        {% csrf_token %}
+    
+        <div>
+            {{form.property_name}}
+        </div>
+        <div>
+            {{form.province}}
+        </div>
+        <div>
+            {{form.email}}
+        </div>
+        <div>
+            {{form.phone_number}}
+        </div>
+        <div>
+            {{form.property_type}}
+        </div>
+        <div>
+            {{form.university_catered}}
+        </div>
+        <div>
+            <h3>Facilities catered</h3>
+            {{form.laundromat}}
+            {{form.unlimited_wifi}}
+            {{form.transport}}
+            {{form.free_electricity}}
+        </div>
+        <hr>
+            <div>
+                {{form.single_male}}
+                {{form.sharing_male}}
+            </div>
+            <div>
+                {{form.single_female}}
+                {{form.sharing_female}}
+            </div>
+        <hr>
+        <div>
+            <h2>Property address</h2>
+            {{form.address}}
+        </div>
+        <hr>
+        <div>
+            <h2>Images</h2>
+            <div>
+                <div>
+                    <label>Property Picture</label>
+                    {{form.main_picture}}
+                </div>
+                <div>
+                    <label>Room picture</label>
+                    {{form.room_picture}}
+                </div>
+                <div>
+                    <label>Kitchen Picture</label>
+                    {{form.kitchen_picture}}
+                </div>
+                <div>
+                    <label>Study Room Picture</label>
+                    {{form.study_room_picture}}
+                </div>
+            </div>
+            
+        </div>
+        <input type="submit" value="Add property">
+    </form>
+</body>
+</html>

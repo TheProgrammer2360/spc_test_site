@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'users/styles.css' %}" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body class="bodyPadding">
+
+    </nav> <!-- ------nav bar---- -->
+    <nav class="navBar">
+      <a class="spcLogoLink" href="index.html">
+          <img src="{% static 'main_website/logo.png' %}" class="spcLogo" alt="SPC logo">
+        </a>
+
+        <ul class="navBarRightPanel navBarMobile">
+
+          <li>
+              <div class="searchDIV">
+                  <input class="searchBox profileSearchBox menuItem" type="search" name="searchType" placeholder="Search accommodation">
+                  <button type="submit" class="searchButton menuItem profileSearchIcon">
+                      <img class="searchIcon  propertySearchIcon" src="Icons/searchIcon.svg"> 
+                  </button>
+              </div>
+          </li>
+
+          <il>
+              <a href="{% url 'main_app:home' %}" class="navItem menuItem">HOME</a>
+          </il>
+        
+          <il >
+              <a href="{% url 'users:student_details' %}" class="navItem  hideStudent menuItem">STUDENT</a>
+          </il>
+        
+          <il>
+            <il>
+                <a href="{% url 'users:property_account' %}" class="navItem showProperty activeLink menuItem">PROPERTY</a>
+            </il>
+
+          <il>
+              <a href="{% url 'users:property_account' %}"  alt="AccountIcon">
+                  <img src="{% static 'main_website/orange account icon.png' %}"  class="accountIcon" alt="account Icon">
+              </a>
+              </il>
+          </il>
+      </ul>
+
+      <button class="hamburger">
+          <img class="hamburgerMenu" src="icons/hamburgerMenu.svg">
+          <img class="closeMenu" src="icons/closeMenu.svg">
+
+      </button>
+    </nav>
+    {% if properties %}
+        {% for property in properties %}
+            <div class="editImageDiv homePagePropertyDiv">
+                <img class="propertyImage homePagePropertyImage" src="{{property.main_picture.url}}">
+            <div class="propertyName propertyNameHomePage">{{property.property_name}}</div>
+            <div class="homePagePropertyPrice">
+                R{{property.price}}
+             </div>
+            <div class="homePagePropertyDescription">
+                description: {{property.discription}}
+            </div>
+                <a href="{% url 'users:view_property_as_student' property.id %}" class="uploadImageEdit2 homePagePropertyViewButton">View Property</a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class=" shoeMesomething">
+            THERE ARE NO PROPERTIES IN THIS SECTION :(
+        </div>
+    {%endif%}
+</body>
+</html>

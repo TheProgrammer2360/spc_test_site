@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        Confirm booking at {{property.property_name}}
+        <img href="{{student.profiles.profile_picture.url}}">
+        <div>
+            Gender: {{student.student.gender}}
+        <form method="POST" action="{% url 'users:book_room' property.id %}">
+            {% csrf_token %}
+            <div>
+                <label>Funding</label>
+                {{application.funding}}
+            </div>
+            <div>
+                {{application.room_type}}
+            </div>
+            <button>book</button>
+        </form>
+        </div>
+        
+    </div>
+</body>
+</html>
